@@ -6,6 +6,18 @@
   display: flex;
   padding-top: 1em;
 }
+#cart-container {
+  border: 2px solid purple;
+  width: 300px;
+  height: 600px;
+  overflow-y: scroll;
+}
+.cart_item_css {
+  background-color: rgb(217, 210, 210);
+  margin: 10px 20px;
+  border-radius: 20px;
+  padding: 20px;
+}
 nav {
   background-color: rgb(9, 97, 9);
   color: white;
