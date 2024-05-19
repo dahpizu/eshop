@@ -1,5 +1,17 @@
+// import { showAlert } from "./lib";
+
 window.onload = function () {
+  const overlay = document.querySelector(".overlay");
+  const cart_icon = document.querySelector(".cart");
+  const cart_count = document.querySelector("#cart-count");
+  function onCartClick(event) {
+    overlay.style.display = "block";
+  }
+
+  cart_icon.addEventListener("click", onCartClick);
+
   let items = document.getElementById("items");
+
   let cart = [];
   let cart_container = document.getElementById("cart-container");
 
@@ -10,31 +22,39 @@ window.onload = function () {
 
     cart = filterItem;
     showCart();
+    cart_count.textContent = cart.length;
     console.log(cart, id);
     // console.log(filterItem, "after filter");
   }
-
-  function showCart() {
-    cart_container.innerHTML = "";
-    cart.forEach((cart_item) => {
-      const item = document.createElement("div");
-      item.textContent = cart_item.title;
-      item.classList = "cart_item_css";
-      const delete_btn = document.createElement("button");
-      delete_btn.textContent = "Delete";
-      delete_btn.addEventListener("click", () => {
-        deleteItem(cart_item.id);
-      });
-      item.appendChild(delete_btn);
-      cart_container.appendChild(item);
-    });
-  }
-
   function addToCart(item) {
     cart.push(item);
-    console.log(cart, "total cart");
+
+    cart_count.textContent = cart.length;
+    // save the cart inside localstorage
+    localStorage.setItem("cartItems", JSON.stringify(cart));
     showCart();
   }
+  function showCart() {
+    cart_container.innerHTML = "";
+    let SavedCart = localStorage.getItem("cartItems");
+    SavedCart = JSON.parse(SavedCart);
+    if (SavedCart) {
+      SavedCart.forEach((cart_item) => {
+        const item = document.createElement("div");
+        item.textContent = cart_item.title;
+        item.classList = "cart_item_css";
+        const delete_btn = document.createElement("button");
+        delete_btn.textContent = "Delete";
+        delete_btn.addEventListener("click", () => {
+          deleteItem(cart_item.id);
+        });
+        item.appendChild(delete_btn);
+        cart_container.appendChild(item);
+      });
+    }
+  }
+  showCart();
+
   fetch("https://fakestoreapi.com/products")
     .then((res) => {
       return res.json();
