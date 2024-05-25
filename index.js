@@ -41,14 +41,62 @@ window.onload = function () {
     if (SavedCart) {
       SavedCart.forEach((cart_item) => {
         const item = document.createElement("div");
-        item.textContent = cart_item.title;
+        // first item in the cart item
+        const itemImg = document.createElement("img");
+        // second div in the cart item which has the title and deceas and increase button
+        const itemContent = document.createElement("div");
+
+        // third div which has price and the rest of data
+        const itemControl = document.createElement("div");
+
+        const head_text = document.createElement("div");
+        const text_content = document.createElement("div");
+        const btn_content = document.createElement("div");
+        // content inside the btn
+        const btn_increas = document.createElement("button");
+        const btn_decreas = document.createElement("button");
+        const count = document.createElement("p");
+        const item_info = document.createElement("span");
+        const isActive = document.createElement("div");
+
+        count.classList = "count";
+        btn_decreas.textContent = "-";
+        btn_increas.textContent = "+";
+        count.textContent = "2";
+        item_info.textContent = "120ml";
+        isActive.classList = "isActive";
+        head_text.textContent = cart_item.title;
+        btn_decreas.classList = "btn_control";
+        btn_increas.classList = "btn_control";
+        btn_content.classList = "btn_content";
+        text_content.classList = "text_content";
+        text_content.appendChild(head_text);
+        text_content.appendChild(item_info);
+        text_content.appendChild(isActive);
+        head_text.classList = "head_text";
+        itemImg.classList = "cart-item-img";
+        itemContent.classList = "cart-item-content";
+        itemControl.classList = "cart-item-control";
+        itemImg.src = cart_item.image;
         item.classList = "cart_item_css";
-        const delete_btn = document.createElement("button");
-        delete_btn.textContent = "Delete";
-        delete_btn.addEventListener("click", () => {
-          deleteItem(cart_item.id);
-        });
-        item.appendChild(delete_btn);
+        itemContent.appendChild(text_content);
+        btn_content.appendChild(btn_increas);
+        btn_content.appendChild(count);
+        btn_content.appendChild(btn_decreas);
+
+        itemContent.appendChild(btn_content);
+
+        itemControl.textContent = cart_item.price;
+        // const delete_btn = document.createElement("button");
+        // delete_btn.textContent = "Delete";
+        // delete_btn.addEventListener("click", () => {
+        //   deleteItem(cart_item.id);
+        // });
+        // item.appendChild(delete_btn);
+
+        item.appendChild(itemImg);
+        item.appendChild(itemContent);
+        item.appendChild(itemControl);
         cart_container.appendChild(item);
       });
     }
